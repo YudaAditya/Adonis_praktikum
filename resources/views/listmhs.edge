@@ -249,51 +249,87 @@
       </div>
     </div>
   </nav>
-  <!-- Header -->
-  <!-- Header -->
-  
-  <!-- Page content -->
-  
 
-  <form method="post" action="{{route('home.delete')}}" enctype="multipart/form-data">
-    {{ csrfField() }}
+  <div class="table-responsive">
+      <div>
 
-    @if(flashMessage('notification'))
-    <div class="col-12">
-      <div class="alert alert-{{ flashMessage('notification.type') }} alert-dismissible" align="center">
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        {{ flashMessage('notification.message') }}
+            <table class="table align-items-center">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col" class="sort" data-sort="name">Nama</th>
+                        <th scope="col" class="sort" data-sort="budget">NIM</th>
+                        <th scope="col" class="sort" data-sort="status">Email</th>
+                        <th scope="col">Tgl_lahir</th>
+                        <th scope="col" class="sort" data-sort="completion">Foto</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody class="list">
+                    @each(data in list)
+                    <tr>
+                          <td>
+                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{data._id}}">
+                                    Launch demo modal
+                              </button>
+                          </td>
+                        <td>{{data.nama}}</td>
+                        <td>{{data.nim}}</td>
+                        <td>{{data.email}}</td>
+                        <td>{{data.tgl_lahir}}</td>
+                          
+    <!-- Modal -->
+    <div class="modal fade" id="{{data._id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{data.nama}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="{{route('home.update')}}" enctype="multipart/form-data">
+                  {{ csrfField() }}
+            <div class="form-group">
+                  <label for="example-text-input" class="form-control-label">Nama</label>
+                  <input class="form-control" type="text" id="nama" name="nama" value="{{data.nama}}">
+              </div>
+              <div class="form-group">
+                  <label for="example-search-input" class="form-control-label">Search</label>
+                  <input class="form-control" type="text" id="nim" name="nim" value="{{data.nim}}">
+              </div>
+              <div class="form-group">
+                  <label for="example-email-input" class="form-control-label">Email</label>
+                  <input class="form-control" type="email" id="email" name="email" value="{{data.email}}">
+              </div>
+              <div class="form-group">
+                  <label for="example-url-input" class="form-control-label">Tanggal lahir</label>
+                  <input class="form-control" type="date" id="tgl_lahir" name="tgl_lahir" value="{{data.tgl_lahir}}">
+              </div>
+              
+           
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+      </form>
+        </div>
       </div>
     </div>
+                       
+             </tr>
+             @endeach
+             </tbody>
+             </table>            
+      </div>
 
-    @endif
-    
-  <div class="form-group">
-      <label for="example-text-input" class="form-control-label">Nama</label>
-      <input class="form-control" type="text" id="nama" name="nama">
   </div>
-  <div class="form-group">
-      <label for="example-search-input" class="form-control-label">Search</label>
-      <input class="form-control" type="text" id="nim" name="nim">
-  </div>
-  <div class="form-group">
-      <label for="example-email-input" class="form-control-label">Email</label>
-      <input class="form-control" type="email" id="email" name="email">
-  </div>
-  <div class="form-group">
-      <label for="example-url-input" class="form-control-label">Tanggal lahir</label>
-      <input class="form-control" type="date" id="tgl_lahir" name="tgl_lahir">
-  </div>
-    
 
-  <button class="btn btn-primary" type="submit">Update</button>
-</form>
+  <!-- Button trigger modal -->
 
-
-
-</div>
-
-@endsection
+  
+  @endsection
 @section('script')
 
 @endsection

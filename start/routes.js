@@ -17,11 +17,23 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
-// Route.on('/home').render('home')
 
-Route.get('/home', 'homeController.index').as('home.index')
+Route.get('logout', 'LoginController.logout').as('logout')
 
-Route.group(() => {
-  Route.get('/register', 'registerController.index').as('register.index');
-  Route.post('/register', 'registerController.store').as('register.store');
-}).middleware('auth')
+Route.group(() => { 
+    Route.get('register', 'RegisterController.index').as('register')
+    Route.post('register', 'RegisterController.store').as('register.store')
+    Route.get('login', 'LoginController.index').as('login')
+    Route.post('login', 'LoginController.store').as('login.store')
+}).middleware(['guest'])
+
+Route.group(()=>{
+  Route.get('home', 'HomeController.index').as('home')
+  Route.post('home','HomeController.create').as('home.post')
+  Route.get('listMhs','HomeController.listMhs').as('home.listMhs')
+  Route.post('update','HomeController.update').as('home.update')
+  Route.post('delete','HomeController.delete').as('home.delete')
+}).middleware(['auth'])
+
+
+

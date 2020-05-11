@@ -16,14 +16,14 @@ class RegisterController {
 
   async store({
     request,
-    response,
-    sessions
+    response
   }) {
-    console.log('test');
+    const {email, name, password} = request.only(['email', 'name', 'password'])
+
     const user = await User.create({
-      email: request.input('email'),
-      name: request.input('name'),
-      password: request.input('password')
+      'email': email,
+      'name': name,
+      'password': password
     })
 
     return response.redirect('/register')
